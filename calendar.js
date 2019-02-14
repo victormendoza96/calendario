@@ -20,17 +20,15 @@ class calendar{
 
   //calcular cuando comienza y termina el mes y cuantos dias tiene
   calculateDay(){
-    this.monthStar = new Date(this.date.getFullYear())
+    this.monthStar = new Date(this.date.getFullYear(),this.date.getMonth(),1 )
+    this.monthEnd = new Date(this.date.getFullYear(),this.date.getMonth()+1,1 )
+    this.monthDays =  Math.floor((this.monthEnd - this.monthStar) / (1000 * 60 *60 * 24))
   };
 
   buildTable(){
     let table = document.createElement('table')
     let thead = document.createElement('thead')
-    let p = new Date(this.date.getFullYear(),this.date.getMonth() )
-    let h = new Date(this.date.getFullYear(),this.date.getMonth()+1 );
-   console.log(p);
-   console.log(h);
-   
+    
 
     for(let i=0; i<7; i++){
       let td = document.createElement('td')
