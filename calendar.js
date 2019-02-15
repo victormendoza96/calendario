@@ -30,23 +30,25 @@ class calendar{
     }
     else{
       this.date = new Date(this.date.getFullYear(),this.date.getMonth() + 1, 1)
-      console.log('aqui');
-      console.log(this.date);
+      console.log(this.date.getMonth() + 'aqui');
     }
+
   this.updateTable();
   this.createButtons();
+  this.holiday();
   }
   //anterior mes
   prev(){
     if (this.date.getMonth == 0){
       this.date = new Date(this.date.getFullYear()-1, 11, 1) 
-      console.log("hola");
     }
     else{
       this.date = new Date(this.date.getFullYear(),this.date.getMonth() - 1, 1)
     }
+
     this.updateTable();
     this.createButtons();
+    this.holiday();
   }
   //creo y agrego funcionalidad a los botones
   createButtons(){
@@ -138,28 +140,44 @@ class calendar{
   holiday(){
     let firstDayInWeek = this.monthStar.getDay();
     let trs = this.calendarTable.querySelectorAll('tr')
-    
-    fetch('http://nolaborables.com.ar/api/v2/feriados/2019')
+    this.cleaHoliday(trs);
+    fetch(`http://nolaborables.com.ar/api/v2/feriados/${this.date.getFullYear()}`)
     .then(res =>  res.json())
     .then(holiday => {
-      for (let i = 0; i <= 5; i++) {//filas semanas
-        let tr = trs[i]
-        let tds = tr.querySelectorAll('td')
-  
-        for (let j = 0; j < 7 ; j++) {//columnas dias de semana
-          let td = tds[j]
-          let day = (i*7)+ j
-
-          holiday.forEach(holiday => {
-            if ((day - firstDayInWeek + 1) == holiday.dia) {
-              td.classList.add('holiday')}
-            else{
-              td.classList.remove('holiday')
+      console.log(holiday);
+     let fil = 0;
+     let col = 0; 
+      holiday.forEach(holiday => {
+        
+        if (this.date.getMonth() + 1 == holiday.mes){
+          for (let i = 0; i <= 5; i++) {//filas semanas
+            let tr = trs[i]
+            let tds = tr.querySelectorAll('td')
+      
+            for (let j = 0; j < 7 ; j++) {//columnas dias de semana
+              let td = tds[j]
+              let day = (i*7)+ j
+            
+              if ((day - firstDayInWeek + 1) == holiday.dia) 
+                td.classList.add('holiday')
+              
             }
-          });
-        } 
-      }
+          } 
+        }
+      }); 
     });
   }
 
+
+  cleaHoliday(trs){
+    for (let i = 0; i <= 5; i++) {//filas semanas
+      let tr = trs[i]
+      let tds = tr.querySelectorAll('td')
+
+      for (let j = 0; j < 7 ; j++) {//columnas dias de semana
+        let td = tds[j]
+        td.classList.remove('holiday') 
+      }
+    } 
+  }
 }
