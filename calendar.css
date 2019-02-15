@@ -31,7 +31,7 @@ html, body {
 }
 
 .today{
-  background-color: #1b69b6;
+  background-color: #6aa5e1;
   color: white;
   border-radius: 4px
 }
@@ -48,7 +48,7 @@ html, body {
   height:0px;
   border-bottom:15px solid transparent; 
   border-top:15px solid transparent; 
-  border-left:15px solid #0000FF; 
+  border-left:15px solid #6aa5e1; 
   font-size:0px;
   line-height:0px;
 }
@@ -75,7 +75,7 @@ html, body {
   height:0px;
   border-bottom:15px solid transparent;  
   border-top:15px solid transparent; 
-  border-right:15px solid blue; 
+  border-right:15px solid #6aa5e1; 
   font-size:0px;
   line-height:0px;
 }

@@ -2,9 +2,6 @@ const days =['D','L','M','X','J','V','S']
 const months=['Enero','Febrero','Marzo','Abril','Mayo','junio','Julio','agosto','Septiembre', 'Octubre','Noviembre', 'Diciembre'];
 
 
-                  
-
-
 class calendar{
   constructor(options){
     
@@ -30,7 +27,6 @@ class calendar{
     }
     else{
       this.date = new Date(this.date.getFullYear(),this.date.getMonth() + 1, 1)
-      console.log(this.date.getMonth() + 'aqui');
     }
 
   this.updateTable();
@@ -137,16 +133,17 @@ class calendar{
     this.container.classList.add('shipnow-calendar')
   }
 
-  holiday(){
+  holiday(){// pintar los dias feriados
     let firstDayInWeek = this.monthStar.getDay();
     let trs = this.calendarTable.querySelectorAll('tr')
-    this.cleaHoliday(trs);
+    
+    this.cleaHoliday(trs);//limpio antes de repintar
+
+    //api no trae los del year 2020+ (aun)
     fetch(`http://nolaborables.com.ar/api/v2/feriados/${this.date.getFullYear()}`)
     .then(res =>  res.json())
     .then(holiday => {
-      console.log(holiday);
-     let fil = 0;
-     let col = 0; 
+  
       holiday.forEach(holiday => {
         
         if (this.date.getMonth() + 1 == holiday.mes){
@@ -168,7 +165,7 @@ class calendar{
     });
   }
 
-
+//quita la clase holiday en las posiciones del mes anterior
   cleaHoliday(trs){
     for (let i = 0; i <= 5; i++) {//filas semanas
       let tr = trs[i]
