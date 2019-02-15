@@ -137,11 +137,15 @@ class calendar{
     let firstDayInWeek = this.monthStar.getDay();
     let trs = this.calendarTable.querySelectorAll('tr')
     
-    this.cleaHoliday(trs);//limpio antes de repintar
+    
 
     //api no trae los del year 2020+ (aun)
     fetch(`http://nolaborables.com.ar/api/v2/feriados/${this.date.getFullYear()}`)
-    .then(res =>  res.json())
+    .then((response) => {
+      //clearHoliday aqui por que afuera al pasar los meses muy rrapido se repintaria mal
+      this.clearHoliday(trs);
+      return response.json();
+    })
     .then(holiday => {
   
       holiday.forEach(holiday => {
@@ -166,7 +170,7 @@ class calendar{
   }
 
 //quita la clase holiday en las posiciones del mes anterior
-  cleaHoliday(trs){
+  clearHoliday(trs){
     for (let i = 0; i <= 5; i++) {//filas semanas
       let tr = trs[i]
       let tds = tr.querySelectorAll('td')
