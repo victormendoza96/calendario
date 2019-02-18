@@ -2,7 +2,7 @@ const days =['D','L','M','X','J','V','S']
 const months=['Enero','Febrero','Marzo','Abril','Mayo','junio','Julio','agosto','Septiembre', 'Octubre','Noviembre', 'Diciembre'];
 
 
-class calendar{
+class Calendar{
   constructor(options){
     
    
@@ -80,6 +80,7 @@ class calendar{
         else{
           td.innerHTML = ''
         }
+        //dia actual
         if ((day - firstDayInWeek + 1) == this.today.getDate() && this.today.getFullYear() == this.date.getFullYear() && months[this.date.getMonth()] == months[this.today.getMonth()]){
           td.classList.add('today')}
         else{
@@ -137,8 +138,6 @@ class calendar{
     let firstDayInWeek = this.monthStar.getDay();
     let trs = this.calendarTable.querySelectorAll('tr')
     
-    
-
     //api no trae los del year 2020+ (aun)
     fetch(`http://nolaborables.com.ar/api/v2/feriados/${this.date.getFullYear()}`)
     .then((response) => {
